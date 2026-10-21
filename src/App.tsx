@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { runContentAware } from "./lib/runContentAware";
 import {
   ArrowDownToLine,
   ArrowLeft,
@@ -121,7 +122,9 @@ export default function App() {
   const [backgroundAi, setBackgroundAi] = useState(false);
   const [inpaintReady, setInpaintReady] = useState(false);
   const [bgMode, setBgMode] = useState<"simple" | "ai">("simple");
-  const [eraseMode, setEraseMode] = useState<"simple" | "smart">("simple");
+  const [eraseMode, setEraseMode] = useState<"context" | "simple" | "smart">(
+    "context",
+  );
   const [size, setSize] = useState({ w: 1080, h: 1080 });
   const [fitMode, setFitMode] = useState<"contain" | "cover">("contain");
   const [preset, setPreset] = useState(0);
@@ -180,9 +183,6 @@ export default function App() {
   useEffect(() => {
     if (backgroundAi) setBgMode("ai");
   }, [backgroundAi]);
-  useEffect(() => {
-    if (inpaintReady) setEraseMode("smart");
-  }, [inpaintReady]);
   useEffect(() => {
     if (!exportOpen && !help) return;
     const prior = document.activeElement as HTMLElement | null;
@@ -421,7 +421,15 @@ export default function App() {
       const count = mask.reduce((a, b) => a + b, 0);
       if (count > mask.length * 0.4)
         throw new Error("한 번에 사진의 40%보다 작은 부분을 칠해 주세요.");
-      if (eraseMode === "smart" && inpaintReady) {
+      if (eraseMode === "context") {
+        const result = await runContentAware(
+          c.getContext("2d")!.getImageData(0, 0, dims.w, dims.h),
+          mask,
+        );
+        pushHistory();
+        c.getContext("2d")!.putImageData(result, 0, 0);
+        repaint();
+      } else if (eraseMode === "smart" && inpaintReady) {
         const m = makeCanvas(dims.w, dims.h);
         const ctx = m.getContext("2d")!;
         ctx.drawImage(overlay.current, 0, 0);
@@ -793,29 +801,35 @@ export default function App() {
                   <span className="spark b">✧</span>
                   <i />
                 </div>
+                <div className="segmented erase-modes">
+                  <button
+                    className={eraseMode === "context" ? "selected" : ""}
+                    onClick={() => setEraseMode("context")}
+                  >
+                    주변 환경에 맞추기
+                  </button>
+                  <button
+                    className={eraseMode === "simple" ? "selected" : ""}
+                    onClick={() => setEraseMode("simple")}
+                  >
+                    주변색 채우기
+                  </button>
+                </div>
                 {inpaintReady && (
-                  <>
-                    <div className="segmented">
-                      <button
-                        className={eraseMode === "smart" ? "selected" : ""}
-                        onClick={() => setEraseMode("smart")}
-                      >
-                        자연스럽게 지우기
-                      </button>
-                      <button
-                        className={eraseMode === "simple" ? "selected" : ""}
-                        onClick={() => setEraseMode("simple")}
-                      >
-                        주변색 채우기
-                      </button>
-                    </div>
-                    <p className="field-help">
-                      {eraseMode === "smart"
-                        ? "이 앱의 서버에서 주변 무늬를 이어서 채워요. 사진을 저장하지 않아요."
-                        : "내 기기에서 주변 색으로 채워요."}
-                    </p>
-                  </>
+                  <button
+                    className={`button secondary full ${eraseMode === "smart" ? "server-erase-selected" : ""}`}
+                    onClick={() => setEraseMode("smart")}
+                  >
+                    자연스럽게 지우기
+                  </button>
                 )}
+                <p className="field-help">
+                  {eraseMode === "context"
+                    ? "주변의 무늬와 색을 참고해서 지운 자리를 채워요. 이 파일만으로 작동하고 사진을 서버로 보내지 않아요."
+                    : eraseMode === "smart"
+                      ? "이 앱의 서버에서 주변 무늬를 이어서 채워요. 사진을 저장하지 않아요."
+                      : "내 기기에서 주변 색을 섞어 채워요. 단순한 배경에 사용해 보세요."}
+                </p>
                 <div className="step-note">
                   <span>1</span>
                   <p>

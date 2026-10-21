@@ -24,4 +24,6 @@ jobs:
           if ! gh release view moa-browser-preview >/dev/null 2>&1; then
             gh release create moa-browser-preview --target "$GITHUB_SHA" --title "모아 스튜디오 · 직접 사용해 보는 HTML 앱" --notes "preview.htm을 내려받아 브라우저로 여세요. 사진 올리기, 주변색 지우기, 단색 배경 제거, 크기 변경, PNG/JPG/PDF/SVG 저장을 사용할 수 있습니다. 서버가 필요한 AI 배경 제거와 AI 대화는 포함되지 않습니다."
           fi
-          gh release upload moa-browser-preview preview.htm --clobber
+          gh release edit moa-browser-preview --notes "v2: 주변 환경에 맞추기 기능이 추가되었습니다. moa-studio-v2.htm을 내려받아 여세요. 주변 무늬를 참고해 지운 부분을 채우며, 서버 없이 작동합니다. 큰 물체나 복잡한 풍경의 생성형 AI 복원을 보장하지는 않습니다."
+          cp preview.htm moa-studio-v2.htm
+          gh release upload moa-browser-preview preview.htm moa-studio-v2.htm --clobber
