@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+<defs><linearGradient id="wall" x2="1" y2="1"><stop stop-color="#eee7da"/><stop offset="1" stop-color="#d7cbb9"/></linearGradient><linearGradient id="vase" x2="1"><stop stop-color="#775d46"/><stop offset=".24" stop-color="#b19b7e"/><stop offset=".53" stop-color="#d7c7aa"/><stop offset=".8" stop-color="#b7a283"/><stop offset="1" stop-color="#8f775e"/></linearGradient><linearGradient id="leaf" x2="1" y2="1"><stop stop-color="#67734a"/><stop offset="1" stop-color="#283a24"/></linearGradient><linearGradient id="pedestal" x2="1"><stop stop-color="#dfd5c4"/><stop offset=".7" stop-color="#f2ebdf"/><stop offset="1" stop-color="#ccbdab"/></linearGradient><filter id="blur"><feGaussianBlur stdDeviation="25"/></filter><filter id="grain"><feTurbulence baseFrequency=".65" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".07"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter></defs>
+<rect width="1200" height="1200" fill="url(#wall)"/>
+<path d="M-200 920L1070-100M-40 1090L1230 70M150 1230L1400 210" stroke="#ab9b83" stroke-opacity=".18" stroke-width="95" filter="url(#blur)"/>
+<path d="M780 800Q1060 500 1020 100L1380 0V1060Z" fill="#c2b39d" opacity=".22" filter="url(#blur)"/>
+<ellipse cx="650" cy="1045" rx="300" ry="42" fill="#a3937f" opacity=".25" filter="url(#blur)"/>
+<rect x="360" y="924" width="466" height="276" fill="url(#pedestal)"/>
+<ellipse cx="593" cy="925" rx="233" ry="35" fill="#f1e9dc"/>
+<ellipse cx="609" cy="915" rx="135" ry="19" fill="#87775e" opacity=".3"/>
+<path d="M570 608C563 695 479 715 480 818C480 906 514 922 600 925C687 925 721 898 719 815C716 716 637 695 630 608Z" fill="url(#vase)"/>
+<ellipse cx="600" cy="608" rx="30" ry="9" fill="#74614d"/>
+<ellipse cx="600" cy="605" rx="34" ry="9" fill="none" stroke="#c6b596" stroke-width="6"/>
+<g fill="none" stroke="#5b6544" stroke-width="7"><path d="M598 611Q575 442 510 253"/><path d="M599 607Q660 377 775 231"/><path d="M602 607Q624 420 610 194"/><path d="M597 568Q477 462 412 399"/></g>
+<g fill="url(#leaf)"><path d="M536 340Q425 328 426 212Q538 232 536 340Z"/><path d="M561 415Q470 401 475 326Q557 336 561 415Z"/><path d="M574 459Q647 415 610 332Q553 385 574 459Z"/><path d="M518 290Q553 207 499 155Q464 235 518 290Z"/><path d="M611 297Q537 254 566 168Q640 206 611 297Z"/><path d="M618 385Q701 333 666 259Q591 300 618 385Z"/><path d="M609 211Q662 144 621 93Q571 152 609 211Z"/><path d="M695 366Q713 265 792 281Q778 372 695 366Z"/><path d="M738 284Q703 197 758 155Q803 224 738 284Z"/><path d="M776 231Q805 144 881 168Q850 252 776 231Z"/><path d="M652 483Q742 464 744 380Q653 391 652 483Z"/><path d="M496 479Q403 510 366 444Q444 408 496 479Z"/><path d="M438 422Q443 342 378 322Q358 399 438 422Z"/></g>
+<g stroke="#dfd5be" stroke-opacity=".3" fill="none" stroke-width="2"><path d="M536 340L433 223M611 297L571 179M695 366L783 288M776 231L868 177M652 483L737 390"/></g>
+<rect width="1200" height="1200" fill="transparent" filter="url(#grain)"/>
+<text x="72" y="1075" font-family="Georgia,serif" font-size="38" letter-spacing="3" fill="#5b574a">morning calm.</text><text x="74" y="1110" font-family="Arial,sans-serif" font-size="12" letter-spacing="4" fill="#776e5f">A LITTLE ROOM TO BREATHE</text>
+</svg>
